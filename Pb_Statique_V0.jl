@@ -2,6 +2,7 @@ using JuMP
 using CPLEX
 using Dates
 t1=Dates.now()
+
 function Resolution_MTZ(n::Int64,d,t,C)
     
     m = Model(CPLEX.Optimizer)
@@ -79,7 +80,7 @@ t = [
 T = 6
 th = [6, 1, 2, 8, 1]
 d = [0, 6, 2, 5, 3]
-C = 12
+C = 6
 
 # Optimisation
 Resolution_MTZ(n, d, t, C)
