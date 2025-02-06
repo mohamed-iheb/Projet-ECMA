@@ -1,11 +1,13 @@
 using JuMP
 using CPLEX
 using Dates
+include("data/n_5-euclidean_false")
 t1=Dates.now()
 
 function Resolution_MTZ(n::Int64,d,t,C)
     
     m = Model(CPLEX.Optimizer)
+    set_silent(m)
     
     # Variable binaire x[i, j] : 1 si l'arc (i, j) est utilisé dans le chemin optimal, 0 sinon
     @variable(m, x[1:n, 1:n], Bin)
@@ -44,7 +46,6 @@ function Resolution_MTZ(n::Int64,d,t,C)
     # Résolution
     optimize!(m)
     
-
     # Récupérer les résultats
     vx = value.(x)
  
@@ -55,6 +56,7 @@ function Resolution_MTZ(n::Int64,d,t,C)
     println("la distance optimale trouvé :",objective_value(m))
  
     afficher(0,vx,1,n,1)
+    return objective_value(m)
 end
 function afficher(s,vx,i,n,i_f)
     for j in 1:n
@@ -69,7 +71,7 @@ function afficher(s,vx,i,n,i_f)
 end
 
 # Pour une donnée manuelle des instances :
-n = 5
+"""n = 5
 t = [
     0 260 864 263 374;
     260 0 796 59 114;
@@ -80,7 +82,7 @@ t = [
 T = 6
 th = [6, 1, 2, 8, 1]
 d = [0, 6, 2, 5, 3]
-C = 6
+C = 12"""
 
 # Optimisation
 Resolution_MTZ(n, d, t, C)
@@ -88,3 +90,31 @@ Resolution_MTZ(n, d, t, C)
 # Temps de calcul
 t2=Dates.now()
 println("Temps de calcul= ",t2-t1)
+
+objectif_statique_n5 = 2561
+objectif_robuste_n5 = 2786
+
+objectif_statique_non_euclidien = [2554, 1857, 2335, 2699, 2190]
+objectif_robuste_non_euclidien = [3307, 2066, 3270, 3113, 2684]
+
+objectif_statique_euclidien = [3022, 2983, 3574, 3529, 4835]
+objectif_robuste_euclidien = [3087, 3132, 3776, 4181, 5423]
+
+
+timeS=[]
+valS=[]
+for E in ["false", "true"]
+    for i in ["6", "7", "8", "9", "10"]
+        println("___________________________________")
+        include("data/n_"*i*"-euclidean_"*E)
+
+        t1=Dates.now()
+        v= Resolution_MTZ(n, d, t, C)
+        t2=Dates.now()
+
+        push!(valS, v)  
+        push!(timeS, t2 - t1) 
+    end
+end
+println(valS)
+println(timeS)
