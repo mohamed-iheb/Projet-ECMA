@@ -1,4 +1,4 @@
-using JuMP
+using JuMP 
 using CPLEX
 using GLPK  # Pour résoudre le sous-problème comme un LP
 
