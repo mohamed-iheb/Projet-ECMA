@@ -90,31 +90,3 @@ Resolution_MTZ(n, d, t, C)
 # Temps de calcul
 t2=Dates.now()
 println("Temps de calcul= ",t2-t1)
-
-objectif_statique_n5 = 2561
-objectif_robuste_n5 = 2786
-
-objectif_statique_non_euclidien = [2554, 1857, 2335, 2699, 2190]
-objectif_robuste_non_euclidien = [3307, 2066, 3270, 3113, 2684]
-
-objectif_statique_euclidien = [3022, 2983, 3574, 3529, 4835]
-objectif_robuste_euclidien = [3087, 3132, 3776, 4181, 5423]
-
-
-timeS=[]
-valS=[]
-for E in ["false", "true"]
-    for i in ["6", "7", "8", "9", "10"]
-        println("___________________________________")
-        include("data/n_"*i*"-euclidean_"*E)
-
-        t1=Dates.now()
-        v= Resolution_MTZ(n, d, t, C)
-        t2=Dates.now()
-
-        push!(valS, v)  
-        push!(timeS, t2 - t1) 
-    end
-end
-println(valS)
-println(timeS)
