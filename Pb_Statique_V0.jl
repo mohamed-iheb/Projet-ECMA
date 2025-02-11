@@ -1,11 +1,13 @@
 using JuMP
 using CPLEX
 using Dates
+include("data/n_5-euclidean_false")
 t1=Dates.now()
 
 function Resolution_MTZ(n::Int64,d,t,C)
     
     m = Model(CPLEX.Optimizer)
+    set_silent(m)
     
     # Variable binaire x[i, j] : 1 si l'arc (i, j) est utilisé dans le chemin optimal, 0 sinon
     @variable(m, x[1:n, 1:n], Bin)
@@ -44,7 +46,6 @@ function Resolution_MTZ(n::Int64,d,t,C)
     # Résolution
     optimize!(m)
     
-
     # Récupérer les résultats
     vx = value.(x)
  
@@ -55,6 +56,7 @@ function Resolution_MTZ(n::Int64,d,t,C)
     println("la distance optimale trouvé :",objective_value(m))
  
     afficher(0,vx,1,n,1)
+    return objective_value(m)
 end
 function afficher(s,vx,i,n,i_f)
     for j in 1:n
@@ -69,7 +71,7 @@ function afficher(s,vx,i,n,i_f)
 end
 
 # Pour une donnée manuelle des instances :
-n = 5
+"""n = 5
 t = [
     0 260 864 263 374;
     260 0 796 59 114;
@@ -80,7 +82,7 @@ t = [
 T = 6
 th = [6, 1, 2, 8, 1]
 d = [0, 6, 2, 5, 3]
-C = 6
+C = 12"""
 
 # Optimisation
 Resolution_MTZ(n, d, t, C)
