@@ -5,6 +5,7 @@ using Dates
 include("Pb_Statique_V0.jl")
 include("LazyCallback.jl")
 include("Dualisation.jl")
+include("heuristique.jl")
 
 
 objectif_statique_n5 = 2561
