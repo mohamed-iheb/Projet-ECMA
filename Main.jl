@@ -27,7 +27,7 @@ valS=[]
 valD=[]
 valL=[]
 P=[]
-for E in ["false", "true"]
+"""for E in ["false", "true"]
     k=0
     for i in ["6", "7", "8", "9", "10"]
         k=k+1
@@ -93,7 +93,7 @@ println("timeL =",timeL)
 println("timeD =",timeD)
 println("timeP =",timeP)
 println("timeH =",timeH)
-
+"""
 GtimeS=[]
 GtimeD=[]
 GtimeL=[]
@@ -141,8 +141,8 @@ GtimeL = [t.value / 1000 for t in GtimeL]
 GtimeP = [t.value / 1000 for t in GtimeP]
 GtimeH = [t.value / 1000 for t in GtimeH]
 
-println("timeS =",GtimeS)
-println("timeL =",GtimeL)
-println("timeD =",GtimeD)
-println("timeP =",GtimeP)
-println("timeH =",GtimeH)
+println("timeS+=",GtimeS)
+println("timeL+=",GtimeL)
+println("timeD+=",GtimeD)
+println("timeP+=",GtimeP)
+println("timeH+=",GtimeH)
