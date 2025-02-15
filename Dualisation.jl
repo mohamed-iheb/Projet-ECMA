@@ -22,6 +22,7 @@ function Resolution_Dualisation(n::Int64,d,t,C,th,T)
 
     # Modèle maître
     model = Model(CPLEX.Optimizer)
+    set_time_limit_sec(model, 30)
 
 
     # Variables

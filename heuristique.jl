@@ -39,7 +39,7 @@ function heuristique(n, d, t, C, th, T)
             else
                 # Sélection du client (proximité vs ratio demande/distance)
                 client_proche = argmin(i -> t_prime[position_actuelle, i], candidats)
-                client_ratio = argmin(i ->  t_prime[position_actuelle, i] * d[i] , candidats)
+                client_ratio = argmin(i ->  1/ d[i] , candidats) #t_prime[position_actuelle, i] *
 
                 
                 prochain = client_ratio # on choisie une des méthodes de recherche heuristique

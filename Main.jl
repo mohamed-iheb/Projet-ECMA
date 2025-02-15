@@ -101,13 +101,13 @@ GtimeP=[]
 GtimeH=[]
 
 
-dir_path = "data1/"
+dir_path = "data/"
 for file in readdir(dir_path)
     file_path = joinpath(dir_path, file)
     println("___________________________________________")
     include(file_path)
 
-    t1=Dates.now()
+    """t1=Dates.now()
     v= Resolution_MTZ(n, d, t, C)
     t2=Dates.now()
     push!(GtimeS, t2 - t1) 
@@ -115,23 +115,24 @@ for file in readdir(dir_path)
     t1=Dates.now()
     vD= Resolution_Dualisation(n,d,t,C,th,T)
     t2=Dates.now()
-    push!(GtimeD, t2 - t1)
+    push!(GtimeD, t2 - t1)"""
     
     t1=Dates.now()
     vH= heuristique(n,d,t,C,th,T)
     t2=Dates.now()
     push!(GtimeH, t2 - t1) 
+    push!(valH, vH)  
 
-    t1=Dates.now()
-    vP= PlC(n,d,t,C,th,T)
+    """t1=Dates.now()
+    #vP= PlC(n,d,t,C,th,T)
     t2=Dates.now()
     push!(GtimeP, t2 - t1) 
 
     t1=Dates.now()
-    vL= Resolution_LCb(n,d,t,C,th)
+    Resolution_LCb(n,d,t,C,th)
     t2=Dates.now()
     push!(GtimeL, t2 - t1) 
-
+"""
 end
 
 
@@ -146,3 +147,4 @@ println("timeL+=",GtimeL)
 println("timeD+=",GtimeD)
 println("timeP+=",GtimeP)
 println("timeH+=",GtimeH)
+println("val=",valH)

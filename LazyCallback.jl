@@ -20,13 +20,13 @@ function Resolution_LCb(n::Int64,d,t,C,th)
 
     # Modèle maître
     model = Model(CPLEX.Optimizer)
+    set_time_limit_sec(model, 30)
 
-    # Il est imposé d’utiliser 1 seul thread en Julia avec CPLEX pour utiliser les callbacks
     MOI.set(model, MOI.NumberOfThreads(), 1)
 
     # Variables
     @variable(model, x[i in nodes, j in nodes], Bin)  # Variables binaires pour les arcs
-    @variable(model, u[i in 2:n] >= 0)  # Quantités livrées
+    @variable(model, u[i in 2:n] >= 0)  
     @variable(model, z >= 0)  # Variable de robustesse (bornée par 0)
 
     # Fonction objectif
@@ -153,6 +153,8 @@ function Resolution_LCb(n::Int64,d,t,C,th)
             println("Le problème est non borné ou infaisable. Vérifiez la fonction objectif et les contraintes.")
         end
     end
-    return value(z)
+    if status == MOI.OPTIMAL
+        return value(z)
+    end
 end
 #Resolution_LCb(n,d,t,C,th)

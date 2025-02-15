@@ -8,7 +8,7 @@ function Resolution_MTZ(n::Int64,d,t,C)
     
     m = Model(CPLEX.Optimizer)
     set_silent(m)
-    
+    set_time_limit_sec(m, 30)
     # Variable binaire x[i, j] : 1 si l'arc (i, j) est utilisé dans le chemin optimal, 0 sinon
     @variable(m, x[1:n, 1:n], Bin)
     @variable(m, u[1:n]>=0, Int) 
@@ -56,7 +56,9 @@ function Resolution_MTZ(n::Int64,d,t,C)
     println("la distance optimale trouvé :",objective_value(m))
  
     afficher(0,vx,1,n,1)
-    return objective_value(m)
+    if status == MOI.OPTIMAL
+        return objective_value(m)
+    end
 end
 function afficher(s,vx,i,n,i_f)
     for j in 1:n
