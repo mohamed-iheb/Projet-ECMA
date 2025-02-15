@@ -30,7 +30,11 @@ function Resolution_Dualisation(n::Int, d::Vector{Int}, t::Matrix{Int}, C::Int, 
     model = Model(Gurobi.Optimizer)
     
     # Définition de la limite de temps (10 s)
+<<<<<<< HEAD
     set_time_limit_sec(model, 0.5)
+=======
+    set_optimizer_attribute(model, "TimeLimit", 10)
+>>>>>>> 4909d3a6e8118b268508be6efd56d2a51afd2d01
 
     # Définition des variables
     @variable(model, x[i in nodes, j in nodes], Bin) 
